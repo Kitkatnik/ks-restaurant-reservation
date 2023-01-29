@@ -1,10 +1,16 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 
-import ErrorAlert from "../layout/ErrorAlert";
+import ErrorAlert from "../errors/ErrorAlert";
+
+import { changeReservationStatus } from "../utils/api";
 
 export default function ReservationsDisplay({ reservations, reservationsError }) {
 
-	const listReservations = reservations.map(( reservation ) => {
+	const history = useHistory();
+	const abortController = new AbortController();
+
+	const listReservations = reservations.map((reservation) => {
 
 		const {
 			reservation_id,
@@ -59,6 +65,7 @@ export default function ReservationsDisplay({ reservations, reservationsError })
 						<button
 							className="btn btn-light btn-outline-danger"
 							type="button"
+							data-reservation-id-cancel={reservation_id}
 						>
 							Cancel
 						</button>
