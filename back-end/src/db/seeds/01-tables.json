@@ -1,0 +1,18 @@
+[
+    {
+        "table_name": "Table #1",
+        "capacity": 2
+    },
+    {
+        "table_name": "Table #2",
+        "capacity": 4
+    },
+    {
+        "table_name": "Table #3",
+        "capacity": 6
+    },
+    {
+        "table_name": "Table #4",
+        "capacity": 8
+    }
+]
