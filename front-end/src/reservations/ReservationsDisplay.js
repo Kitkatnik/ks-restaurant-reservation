@@ -5,13 +5,14 @@ import ErrorAlert from "../errors/ErrorAlert";
 
 import { changeReservationStatus } from "../utils/api";
 
-export default function ReservationsDisplay({ reservations, reservationsError }) {
-
+export default function ReservationsDisplay({
+	reservations,
+	reservationsError,
+}) {
 	const history = useHistory();
 	const abortController = new AbortController();
 
 	const listReservations = reservations.map((reservation) => {
-
 		const {
 			reservation_id,
 			first_name,
@@ -26,6 +27,16 @@ export default function ReservationsDisplay({ reservations, reservationsError })
 		const readableTime = new Date(
 			`${reservation_date}T${reservation_time}`
 		).toLocaleTimeString();
+
+		const handleCancelReservation = async () => {
+			await changeReservationStatus(
+				reservation_id,
+				"cancelled",
+				abortController.signal
+			);
+			history.go(0);
+			return () => abortController.abort();
+		};
 
 		return (
 			<tr key={reservation_id}>
@@ -66,6 +77,12 @@ export default function ReservationsDisplay({ reservations, reservationsError })
 							className="btn btn-light btn-outline-danger"
 							type="button"
 							data-reservation-id-cancel={reservation_id}
+							onClick={() => {
+								const confirmation = window.confirm(
+									`Do you want to cancel this reservation? This cannot be undone.`
+								);
+								return confirmation ? handleCancelReservation() : null;
+							}}
 						>
 							Cancel
 						</button>

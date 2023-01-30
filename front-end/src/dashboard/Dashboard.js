@@ -1,7 +1,10 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
+
 import { previous, today, next } from "../utils/date-time";
+
 import ReservationsDisplay from "../reservations/ReservationsDisplay";
+import TablesDisplay from "../tables/TablesDisplay";
 
 /**
  * Defines the dashboard page.
@@ -13,6 +16,8 @@ function Dashboard({
 	date,
 	reservations,
 	reservationsError,
+	tables,
+	tablesError,
 }) {
 	const history = useHistory();
 
@@ -46,6 +51,10 @@ function Dashboard({
 				reservations={reservations}
 				reservationsError={reservationsError}
 			/>
+
+			<h4>Tables</h4>
+
+			<TablesDisplay tables={tables} tablesError={tablesError} />
 		</main>
 	);
 }
